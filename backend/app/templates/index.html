@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CV Analysis</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>CV Analysis</h1>
+      <form id="upload-form">
+        <div class="field">
+          <label>Resume PDF</label>
+          <input type="file" id="file" name="file" accept="application/pdf" required />
+        </div>
+
+        <div class="field">
+          <label>Required skills (comma-separated)</label>
+          <input type="text" id="required_skills" name="required_skills" placeholder="python, fastapi, sql" />
+        </div>
+
+        <div class="field">
+          <label>Preferred skills (comma-separated)</label>
+          <input type="text" id="preferred_skills" name="preferred_skills" placeholder="docker, aws" />
+        </div>
+
+        <div class="field">
+          <label>Minimum years of experience</label>
+          <input type="number" id="min_years_experience" name="min_years_experience" min="0" value="0" />
+        </div>
+
+        <div class="field">
+          <label>Education keywords (comma-separated)</label>
+          <input type="text" id="education_keywords" name="education_keywords" placeholder="bachelor, master, phd" />
+        </div>
+
+        <button type="submit">Evaluate</button>
+      </form>
+
+      <div id="output" class="output" hidden>
+        <h2>Result</h2>
+        <pre id="json"></pre>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById('upload-form');
+      const output = document.getElementById('output');
+      const jsonEl = document.getElementById('json');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const resp = await fetch('/api/evaluate', { method: 'POST', body: fd });
+        const data = await resp.json();
+        output.hidden = false;
+        jsonEl.textContent = JSON.stringify(data, null, 2);
+      });
+    </script>
+  </body>
+</html>
