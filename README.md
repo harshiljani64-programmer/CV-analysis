@@ -38,6 +38,16 @@ uvicorn backend.app.main:app --reload
 
 Open `http://127.0.0.1:8000/` in your browser.
 
+### Alternatively: Run the Streamlit app
+
+```bash
+streamlit run streamlit_app.py
+# If streamlit isn't on PATH:
+python3 -m streamlit run streamlit_app.py
+```
+
+Open the local URL shown in the terminal (usually `http://localhost:8501`).
+
 ## Usage examples
 
 - Fill in `Required skills` with comma-separated values like `python, fastapi, sql`.
